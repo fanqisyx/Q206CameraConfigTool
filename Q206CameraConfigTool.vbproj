@@ -47,6 +47,10 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CC_IniFileIO, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\CC_IniFileIO.dll</HintPath>
+    </Reference>
     <Reference Include="CLIDelegate, Version=1.0.7051.32966, Culture=neutral, PublicKeyToken=71f71440696c7e6b, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\DahuaTech\MV Viewer\Development\DOTNET DLL\DOTNET_4.0\x64\CLIDelegate.dll</HintPath>
