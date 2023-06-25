@@ -75,7 +75,7 @@ Public Class Form1
         If File.Exists(CSVfilename) Then
             Dim result As DialogResult = MessageBox.Show("文件已存在。是否覆盖？", "提示", MessageBoxButtons.YesNo)
             If result = DialogResult.Yes Then
-                WriteToFile(CSVfilename, mytext, True) ' 覆盖现有文件
+                WriteToFile(CSVfilename, mytext, False) ' 覆盖现有文件
             End If
         Else
             WriteToFile(CSVfilename, mytext, False) ' 创建新文件
@@ -135,17 +135,69 @@ Public Class Form1
         Dim filePath As String = "LocalConfigFileInfo.csv"
         Dim content As String = TextBox2.Text
         SaveCSV(filePath, content)
-        '' 检查文件是否存在
-        'If File.Exists(filePath) Then
-        '    Dim result As DialogResult = MessageBox.Show("文件已存在。是否覆盖？", "提示", MessageBoxButtons.YesNo)
-
-        '    If result = DialogResult.Yes Then
-        '        WriteToFile(filePath, content, True) ' 覆盖现有文件
-        '    End If
-        'Else
-        '    WriteToFile(filePath, content, False) ' 创建新文件
-        'End If
     End Sub
+
+    Private title() As String
+    Private ConfigInfo() As Dictionary(Of String, String)
+    Private Sub bt_ReadCSV_Click(sender As Object, e As EventArgs) Handles bt_ReadCSV.Click
+        OpenFileDialog1.Filter = "CSV 文件 (*.csv)|*.csv"
+        If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
+            Dim lines() As String = File.ReadAllLines(OpenFileDialog1.FileName) ' 读取CSV文件的所有行
+            'ReDim ConfigInfo(lines.Length - 2)
+            Dim info As String = ""
+            For Each line As String In lines
+                Dim values() As String = line.Split(","c) ' 根据逗号分隔每一行的值
+                Dim index As Integer
+                If Integer.TryParse(values(0), index) = False Then
+                    ReDim title(values.Length - 1)
+                    title = values
+                    info += line + Environment.NewLine
+                End If
+            Next
+            Dim diclist As List(Of Dictionary(Of String, String)) = New List(Of Dictionary(Of String, String))
+            For Each line As String In lines
+                Dim values() As String = line.Split(","c) ' 根据逗号分隔每一行的值
+                Dim index As Integer
+                If Integer.TryParse(values(0), index) = True Then
+                    Dim mydictionary As Dictionary(Of String, String) = New Dictionary(Of String, String)
+                    info += line + Environment.NewLine
+                    For n = 0 To values.Length - 1
+                        mydictionary.Add(title(n), values(n))
+                    Next
+                    diclist.Add(mydictionary)
+                End If
+            Next
+            ConfigInfo = diclist.ToArray()
+            DG_ChangeTextBoxValue(TextBox3, info)
+        End If
+    End Sub
+
+    Private Sub bt_WriteCameraConfigFile_Click(sender As Object, e As EventArgs) Handles bt_WriteCameraConfigFile.Click
+        If FolderBrowserDialog1.ShowDialog = DialogResult.OK Then
+            ' 检查文件是否存在
+            Dim fileName As String = FolderBrowserDialog1.SelectedPath + "\Camera0.ini"
+            If File.Exists(fileName) Then
+                Dim result As DialogResult = MessageBox.Show("文件已存在。是否覆盖？", "提示", MessageBoxButtons.YesNo)
+                If result = DialogResult.No Then
+                    Return
+                End If
+            End If
+            Try
+                For index = 0 To ConfigInfo.Length - 1
+                    Dim mydis As Dictionary(Of String, String) = ConfigInfo(index)
+                    Dim myini As New ChuangChi.CC_IniFileIO
+                    myini.Path = FolderBrowserDialog1.SelectedPath + "\Camera" + mydis.Item("index") + ".ini"
+                    myini.Write("DevicePara", mydis.Keys(1), mydis.Item(mydis.Keys(1)))
+                    myini.Write("DevicePara", mydis.Keys(2), mydis.Item(mydis.Keys(2)))
+                Next
+                MessageBox.Show("写入成功")
+            Catch ex As Exception
+                MessageBox.Show(ex.ToString())
+            End Try
+        End If
+    End Sub
+
+
 #End Region
 
 End Class
