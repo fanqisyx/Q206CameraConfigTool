@@ -34,10 +34,11 @@ Partial Class Form1
         Me.bt_writeConfigFileinfoToCSV = New System.Windows.Forms.Button()
         Me.bt_Readconfig = New System.Windows.Forms.Button()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.bt_WriteCameraConfigFileInOne = New System.Windows.Forms.Button()
         Me.bt_WriteCameraConfigFile = New System.Windows.Forms.Button()
         Me.bt_ReadCSV = New System.Windows.Forms.Button()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.TabControl1.SuspendLayout()
@@ -170,8 +171,18 @@ Partial Class Form1
         Me.TabPage3.Text = "汇总信息读写"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
+        'TextBox3
+        '
+        Me.TextBox3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox3.Location = New System.Drawing.Point(0, 29)
+        Me.TextBox3.Multiline = True
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(1050, 570)
+        Me.TextBox3.TabIndex = 1
+        '
         'Panel3
         '
+        Me.Panel3.Controls.Add(Me.bt_WriteCameraConfigFileInOne)
         Me.Panel3.Controls.Add(Me.bt_WriteCameraConfigFile)
         Me.Panel3.Controls.Add(Me.bt_ReadCSV)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Top
@@ -180,13 +191,22 @@ Partial Class Form1
         Me.Panel3.Size = New System.Drawing.Size(1050, 29)
         Me.Panel3.TabIndex = 0
         '
+        'bt_WriteCameraConfigFileInOne
+        '
+        Me.bt_WriteCameraConfigFileInOne.Location = New System.Drawing.Point(380, 3)
+        Me.bt_WriteCameraConfigFileInOne.Name = "bt_WriteCameraConfigFileInOne"
+        Me.bt_WriteCameraConfigFileInOne.Size = New System.Drawing.Size(214, 23)
+        Me.bt_WriteCameraConfigFileInOne.TabIndex = 5
+        Me.bt_WriteCameraConfigFileInOne.Text = "更新config文件(所有相机一个文件)"
+        Me.bt_WriteCameraConfigFileInOne.UseVisualStyleBackColor = True
+        '
         'bt_WriteCameraConfigFile
         '
         Me.bt_WriteCameraConfigFile.Location = New System.Drawing.Point(160, 3)
         Me.bt_WriteCameraConfigFile.Name = "bt_WriteCameraConfigFile"
-        Me.bt_WriteCameraConfigFile.Size = New System.Drawing.Size(105, 23)
+        Me.bt_WriteCameraConfigFile.Size = New System.Drawing.Size(214, 23)
         Me.bt_WriteCameraConfigFile.TabIndex = 4
-        Me.bt_WriteCameraConfigFile.Text = "更新config文件"
+        Me.bt_WriteCameraConfigFile.Text = "更新config文件(一个相机一个文件)"
         Me.bt_WriteCameraConfigFile.UseVisualStyleBackColor = True
         '
         'bt_ReadCSV
@@ -198,21 +218,9 @@ Partial Class Form1
         Me.bt_ReadCSV.Text = "读取已配置好的csv文件"
         Me.bt_ReadCSV.UseVisualStyleBackColor = True
         '
-        'TextBox3
-        '
-        Me.TextBox3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox3.Location = New System.Drawing.Point(0, 29)
-        Me.TextBox3.Multiline = True
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(1050, 570)
-        Me.TextBox3.TabIndex = 1
-        '
         'OpenFileDialog1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
-        '
-        'FolderBrowserDialog1
-        '
         '
         'Form1
         '
@@ -254,4 +262,5 @@ Partial Class Form1
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents FolderBrowserDialog1 As FolderBrowserDialog
+    Friend WithEvents bt_WriteCameraConfigFileInOne As Button
 End Class

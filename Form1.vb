@@ -197,6 +197,36 @@ Public Class Form1
         End If
     End Sub
 
+    Private Sub bt_WriteCameraConfigFileInOne_Click(sender As Object, e As EventArgs) Handles bt_WriteCameraConfigFileInOne.Click
+        If FolderBrowserDialog1.ShowDialog = DialogResult.OK Then
+            ' 检查文件是否存在
+            Dim fileName As String = FolderBrowserDialog1.SelectedPath + "\CameraConfig.INI"
+            If File.Exists(fileName) Then
+                Dim result As DialogResult = MessageBox.Show("文件已存在。是否覆盖？", "提示", MessageBoxButtons.YesNo)
+                If result = DialogResult.No Then
+                    Return
+                End If
+            End If
+            Try
+                For index = 0 To ConfigInfo.Length - 1
+                    Dim mydis As Dictionary(Of String, String) = ConfigInfo(index)
+                    Dim myini As New ChuangChi.CC_IniFileIO
+                    myini.Path = FolderBrowserDialog1.SelectedPath + "\CameraConfig.INI"
+                    myini.Write(index.ToString(), "cameraname", mydis.Item(mydis.Keys(1)))
+                    myini.Write(index.ToString(), "cameratype", "Dahua")
+                    myini.Write("enable", mydis.Item(mydis.Keys(1)), index.ToString())
+                Next
+                MessageBox.Show("写入成功")
+            Catch ex As Exception
+                MessageBox.Show(ex.ToString())
+            End Try
+        End If
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
 
 #End Region
 
